@@ -1,0 +1,127 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace LAB_1
+{
+    internal class Program
+    {
+        static void Main(string[] args)
+        {
+            Program app = new Program();   
+        }
+        private static string ReturnBMIVal(String Gender, float BMI)
+        {
+            if ((Gender.ToLower() == "female" && BMI < 17.5) || (Gender.ToLower() == "male" && BMI < 18.5))
+            {
+                return "severly underweight";
+            }
+            if ((Gender.ToLower() == "female" && BMI >= 17.5 && BMI <19.1) || (Gender.ToLower() == "male" && BMI >= 18.5 && BMI <20.7))
+            {
+                return "underweight";
+            }
+            if ((Gender.ToLower() == "female" && BMI >= 19.1 && BMI < 25.8) || (Gender.ToLower() == "male" && BMI >= 20.7 && BMI < 26.4))
+            {
+                return "in normal range";
+            }
+            if ((Gender.ToLower() == "female" && BMI >= 25.8 && BMI < 27.3) || (Gender.ToLower() == "male" && BMI >= 26.4 && BMI < 27.8))
+            {
+                return "marginally overweight";
+            }
+            if ((Gender.ToLower() == "female" && BMI >= 27.3 && BMI < 32.3) || (Gender.ToLower() == "male" && BMI >= 27.8 && BMI < 31.1))
+            {
+                return "overweight";
+            }
+            if ((Gender.ToLower() == "female" && BMI >= 32.3 && BMI < 35) || (Gender.ToLower() == "male" && BMI >= 31.1 && BMI < 35))
+            {
+                return "very overweight or obese";
+            }
+            if (BMI > 35 && BMI <= 40)
+            {
+                return "severely obese";
+            }
+            if (BMI > 40 && BMI <= 50)
+            {
+                return "morbidly obese";
+            }
+            if (BMI > 50 && BMI < 60)
+            {
+                return "morbidly obese";
+            }
+            return "How did you get here";
+        }
+
+        public Program()
+        {
+            Boolean Progress = false;
+            String Gender = null;
+            float Weight = 0;
+            float Height = 0;
+            while (1 != 0)
+            {
+                while (Progress == false)
+                {
+                    try
+                    {
+                        Console.WriteLine("are you male or female");
+                        Gender = Console.ReadLine();
+                        if (Gender.ToLower() == "male" || Gender.ToLower() == "female")
+                        {
+                            Progress = true;
+                        }
+                        else
+                        {
+                            throw new ArgumentException($"Parameter Gender: {Gender} is not a valid value");
+                        }
+
+                    }
+                    catch (ArgumentException e)
+                    {
+                        Console.WriteLine(e.Message);
+
+                    }
+                }
+                Progress = false;
+                while (Progress == false)
+                {
+                    try
+                    {
+                        Console.WriteLine("what is your weight in pounds");
+                        Weight = Single.Parse(Console.ReadLine());
+                        Progress = true;
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine(e.Message);
+
+                    }
+                }
+                Progress = false;
+                while (Progress == false)
+                {
+                    try
+                    {
+                        Console.WriteLine("what is your height in inches");
+                        Height = Single.Parse(Console.ReadLine());
+                        Progress = true;
+                    }
+                    catch (System.FormatException e)
+                    {
+                        Console.WriteLine(e.Message);
+
+                    }
+
+                }
+                Progress = false;
+                float BMI = (((Weight / (Height * Height)) * 703));
+                Console.WriteLine(ReturnBMIVal(Gender, BMI));
+
+            }
+        }
+        }
+    }
+  
